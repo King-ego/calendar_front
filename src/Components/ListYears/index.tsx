@@ -14,10 +14,7 @@ interface ListProps extends Interface.ReactChildren {
 const ListYears: React.FC<ListProps> = ({ data, setData }): JSX.Element => {
   const [step, setStep] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
-  const [dateView, setDateView] = React.useState<{
-    year?: string;
-    month?: string;
-  }>({});
+  const [dateView, setDateView] = React.useState<Interface.MonthYear>({});
 
   const getCompleteddata = async (
     type: string,
@@ -105,7 +102,11 @@ const ListYears: React.FC<ListProps> = ({ data, setData }): JSX.Element => {
         (loading ? (
           <div>carregando...</div>
         ) : data?.days?.length ? (
-          <Days days={data?.days} selectDate={dateView} />
+          <Days
+            days={data?.days}
+            selectDate={dateView}
+            previousStep={previousStep}
+          />
         ) : (
           <div>Nenhum Dia Encontrado</div>
         ))}

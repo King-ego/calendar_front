@@ -3,17 +3,21 @@ import * as Interface from 'Common/Interfaces';
 import { daytwodigit, DayWeek } from 'Common/data_fns_functions';
 import * as StyledComponents from './style';
 
-interface DaysProps {
+interface DaysProps extends Interface.ReactChildren {
   days: Interface.Days[];
-  selectDate: {
-    year?: string;
-    month?: string;
-  };
+  previousStep: () => void;
+  selectDate: Interface.MonthYear;
 }
 
-const Days: React.FC<DaysProps> = ({ days, selectDate }): JSX.Element => {
+const Days: React.FC<DaysProps> = ({
+  days,
+  selectDate,
+  previousStep,
+}): JSX.Element => {
   return (
     <div>
+      Calendário de {selectDate?.year}
+      <p onClick={previousStep}>voltar</p>
       <div>
         {days.map((day) => (
           <StyledComponents.Flex key={day?.id}>
