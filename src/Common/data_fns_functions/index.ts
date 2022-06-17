@@ -9,7 +9,7 @@ export const DayWeek = (
   year: string = '2022',
   month: string = '01',
   day: number = 1
-) => {
+): string => {
   const dayweek = getDay(
     parseISO(
       `${year}-${getDateMonth(month as Types.NameMonth)}-${daytwodigit(day)}`
@@ -29,7 +29,7 @@ export const DayWeek = (
   return week[dayweek];
 };
 
-export const getDateMonth = (date: Types.NameMonth) => {
+export const getDateMonth = (date: Types.NameMonth): string => {
   const month = {
     janeiro: '01',
     fevereiro: '02',

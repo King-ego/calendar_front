@@ -11,7 +11,7 @@ interface ListProps extends Interface.ReactChildren {
   >;
 }
 
-const ListYears: React.FC<ListProps> = ({ data, setData }) => {
+const ListYears: React.FC<ListProps> = ({ data, setData }): JSX.Element => {
   const [step, setStep] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const [dateView, setDateView] = React.useState<{

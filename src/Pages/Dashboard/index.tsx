@@ -4,7 +4,7 @@ import { getUsersLogin } from 'Common/Http/Service/Login';
 import { ResponseAxiosUser, Years } from 'Common/Interfaces';
 import ListYears from 'Components/ListYears';
 
-const Home: React.FC = () => {
+const Home: React.FC = (): JSX.Element => {
   const params = useParams();
   const [data, setData] = React.useState<ResponseAxiosUser>();
   const [message, setMessage] = React.useState('');

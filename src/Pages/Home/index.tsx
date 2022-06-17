@@ -4,7 +4,7 @@ import * as StyledComponents from './style';
 import { useNavigate } from 'react-router';
 import { ResponseAxiosUser } from 'Common/Interfaces';
 
-const Dashboard: React.FC = () => {
+const Dashboard: React.FC = (): JSX.Element => {
   const [users, setUsers] = React.useState<ResponseAxiosUser[]>([]);
   const [loading, setLoading] = React.useState(false);
 

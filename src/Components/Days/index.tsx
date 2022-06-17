@@ -11,7 +11,7 @@ interface DaysProps {
   };
 }
 
-const Days: React.FC<DaysProps> = ({ days, selectDate }) => {
+const Days: React.FC<DaysProps> = ({ days, selectDate }): JSX.Element => {
   return (
     <div>
       <div>
