@@ -14,6 +14,11 @@ export interface Months {
   year_id?: string;
 }
 
+export interface MonthYear {
+  year?: string;
+  month?: string;
+}
+
 export interface Days {
   id: string;
   month_id: string;
