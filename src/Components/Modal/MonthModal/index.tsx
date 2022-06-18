@@ -4,6 +4,7 @@ import * as Interface from 'Common/Interfaces';
 import * as StyledComponents from './style';
 import Modal from '..';
 import { getUsersLogin, postMonth } from 'Common/Http/Service/Login';
+import Icon from 'Components/Icon';
 
 interface MonthModalProps extends Interface.ReactChildren {
   showModal: () => void;
@@ -56,24 +57,29 @@ const MonthModal: React.FC<MonthModalProps> = ({
     console.log({ create });
   };
   return (
-    <Modal open={ismodal}>
-      <p onClick={showModal} style={{ color: 'white' }}>
+    <Modal open={ismodal} haeder={true} showModal={showModal}>
+      {/* <p onClick={showModal} style={{ color: 'white' }}>
         {yearId}
-      </p>
+      </p> */}
       {months.map((value: string, index: number) => (
         <StyledComponents.Div
           disabled={index >= monthsList?.length}
           key={value}
         >
-          {value}
-
-          <button
-            disabled={index + 1 <= monthsList?.length}
-            // disabled={index >= monthsList?.length}
-            onClick={() => createMonth(value)}
-          >
-            cria mes
-          </button>
+          <div style={{ width: '64px', textTransform: 'capitalize' }}>
+            {value}
+          </div>
+          <div style={{ marginLeft: '20px' }}>
+            <StyledComponents.ButtonIcrement
+              disabled={index + 1 <= monthsList?.length}
+              // disabled={index >= monthsList?.length}
+              onClick={() => createMonth(value)}
+              style={{ height: '19px', cursor: 'pointer' }}
+            >
+              <Icon width={15} height={15} name="increment" stroke="black" />
+              {/* cria mes */}
+            </StyledComponents.ButtonIcrement>
+          </div>
         </StyledComponents.Div>
       ))}
     </Modal>
