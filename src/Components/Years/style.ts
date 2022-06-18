@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-export const Box = styled.div`
-  border: 1px solid gray;
-`;
-
 export const Flex = styled.div`
   display: flex;
   width: 100%;
@@ -19,12 +15,3 @@ export const Flex = styled.div`
     background: #c7c7c7;
   }
 `;
-
-// export const ListMonth = styled.div`
-//   width: 100%;
-//   display: flex;
-//   justify-content: center;
-//   flex-direction: column;
-
-//   /* max-width: 900px; */
-// `;
