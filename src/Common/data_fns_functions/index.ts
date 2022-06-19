@@ -51,7 +51,7 @@ export const validatedDay = (
   year: string = '2022',
   month: string = '01',
   day: string
-) => {
+): boolean => {
   const validated = parseISO(
     `${year}-${getDateMonth(month as Types.NameMonth)}-${day}`
   );
