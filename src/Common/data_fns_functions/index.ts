@@ -46,3 +46,19 @@ export const getDateMonth = (date: Types.NameMonth): string => {
   };
   return month[date];
 };
+
+export const validatedDay = (
+  year: string = '2022',
+  month: string = '01',
+  day: string
+) => {
+  const validated = parseISO(
+    `${year}-${getDateMonth(month as Types.NameMonth)}-${day}`
+  );
+
+  if (validated.getDate()) {
+    return false;
+  }
+
+  return true;
+};

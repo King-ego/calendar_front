@@ -65,12 +65,7 @@ const Years: React.FC<YearsProps> = ({
           <button onClick={() => setInformationModal(year?.id)}>+</button>
         </StyledComponents.Flex>
       ))}
-      <MonthModal
-        showModal={showModal}
-        ismodal={isModal}
-        yearId={yearModal}
-        years={years}
-      />
+      <MonthModal showModal={showModal} ismodal={isModal} yearId={yearModal} />
     </div>
   );
 };
