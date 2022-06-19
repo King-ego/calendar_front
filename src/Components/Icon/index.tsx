@@ -8,11 +8,9 @@ interface IconProps extends Interface.ReactChildren {
   fill?: string;
   stroke?: string;
 }
-const Icon: React.FC<IconProps> = (props) => {
-  const { width, height, name, fill, stroke } = props;
-
+const Icon: React.FC<IconProps> = ({ name, fill, height, stroke, width }) => {
   return (
-    <svg width={width} height={height} fill={fill} stroke={stroke} {...props}>
+    <svg width={width} height={height} fill={fill} stroke={stroke}>
       <use href={`/img/sprite.svg#${name}`} />
     </svg>
   );

@@ -74,7 +74,11 @@ const MonthModal: React.FC<MonthModalProps> = ({
           </div>
           <div style={{ marginLeft: '20px' }}>
             <StyledComponents.ButtonIcrement
-              disabled={loading ? loading : index + 1 <= monthsList?.length}
+              disabled={
+                loading
+                  ? loading
+                  : index < monthsList?.length || index > monthsList?.length
+              }
               // disabled={index >= monthsList?.length}
               onClick={() => createMonth(value)}
               style={{ height: '19px', cursor: 'pointer' }}
