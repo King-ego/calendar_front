@@ -13,3 +13,13 @@ export const postMonth = async (
     name: name,
   });
 };
+
+export const postDay = async (
+  patch: string,
+  name: string
+): Promise<AxiosResponse> => {
+  return await api.post(patch, {
+    name: Number(name),
+    task: null,
+  });
+};
