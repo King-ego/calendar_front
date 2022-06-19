@@ -10,16 +10,15 @@ interface MonthModalProps extends Interface.ReactChildren {
   showModal: () => void;
   ismodal: boolean;
   yearId: string;
-  years: Interface.Years[];
 }
 
 const MonthModal: React.FC<MonthModalProps> = ({
   showModal,
   ismodal,
   yearId,
-  years,
 }): JSX.Element => {
   const [monthsList, setMonthsList] = React.useState<Interface.Months[]>([]);
+  const [loading, setLoading] = React.useState(true);
   const months = [
     'janeiro',
     'fevereiro',
@@ -43,12 +42,16 @@ const MonthModal: React.FC<MonthModalProps> = ({
   }, [yearId]);
 
   const getMonthsUser = async () => {
-    const monthsr = await getUsersLogin(`year/${yearId}/month`);
-    const months: Interface.Months[] = monthsr?.data?.months?.filter(
-      (e: Interface.Months) => e.year_id === yearId
-    );
-    setMonthsList(months);
-    console.log({ months });
+    setLoading(true);
+    try {
+      const monthsr = await getUsersLogin(`year/${yearId}/month`);
+      const months: Interface.Months[] = monthsr?.data?.months?.filter(
+        (e: Interface.Months) => e.year_id === yearId
+      );
+      setMonthsList(months);
+      console.log({ months });
+    } catch (error) {}
+    setLoading((state) => !state);
   };
 
   const createMonth = async (name: string) => {
@@ -71,7 +74,7 @@ const MonthModal: React.FC<MonthModalProps> = ({
           </div>
           <div style={{ marginLeft: '20px' }}>
             <StyledComponents.ButtonIcrement
-              disabled={index + 1 <= monthsList?.length}
+              disabled={loading ? loading : index + 1 <= monthsList?.length}
               // disabled={index >= monthsList?.length}
               onClick={() => createMonth(value)}
               style={{ height: '19px', cursor: 'pointer' }}
