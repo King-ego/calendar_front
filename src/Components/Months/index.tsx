@@ -43,7 +43,7 @@ const Months: React.FC<MonthsProps> = ({
       const days: Interface.Days[] = responseDay?.data?.days?.filter(
         (e: Interface.Days) => e.month_id === id
       );
-      updateView({ ...dateView, month: month });
+      updateView({ ...dateView, month: month, month_id: id });
       updateGeneralDate({ ...generalDate, days });
     } catch (error) {}
     loadingPage();

@@ -23,3 +23,12 @@ export const postDay = async (
     task: null,
   });
 };
+
+export const updateDayTask = async (
+  patch: string,
+  task: string
+): Promise<AxiosResponse> => {
+  return await api.patch(patch, {
+    task,
+  });
+};
