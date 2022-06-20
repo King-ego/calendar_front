@@ -1,6 +1,7 @@
 import React from 'react';
 import * as Interface from 'Common/Interfaces';
 import { AplicationData } from './AplicationData';
+import { AplicationDataView } from './AplicationDataView';
 
 const Provider: React.FC<Interface.ReactChildren> = ({
   children,
@@ -8,9 +9,12 @@ const Provider: React.FC<Interface.ReactChildren> = ({
   const [calendar, setCalendar] = React.useState<
     Interface.ResponseAxiosUser | undefined
   >();
+  const [calendarView, setCalendarView] = React.useState<Interface.MonthYear>();
   return (
     <AplicationData.Provider value={{ calendar, setCalendar }}>
-      {children}
+      <AplicationDataView.Provider value={{ calendarView, setCalendarView }}>
+        {children}
+      </AplicationDataView.Provider>
     </AplicationData.Provider>
   );
 };

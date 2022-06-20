@@ -1,5 +1,4 @@
 import React from 'react';
-// import { getUsersLogin } from 'Common/Http/Service/Login';
 import * as Interface from 'Common/Interfaces';
 import * as StyledComponents from './style';
 import Days from 'Components/Days';
@@ -12,7 +11,6 @@ interface ListProps extends Interface.ReactChildren {}
 const ListYears: React.FC<ListProps> = (): JSX.Element => {
   const [step, setStep] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
-  const [dateView, setDateView] = React.useState<Interface.MonthYear>({});
   const { calendar } = useAplicationData();
 
   const loadingPage = () => {
@@ -35,15 +33,12 @@ const ListYears: React.FC<ListProps> = (): JSX.Element => {
         <StyledComponents.Box>
           <div>
             {calendar?.years?.length ? (
-              <Years
-                years={calendar?.years}
-                loadingPage={loadingPage}
-                nextStep={nextStep}
-                updateView={setDateView}
-                dateView={dateView}
-              />
+              <Years loadingPage={loadingPage} nextStep={nextStep} />
             ) : (
-              <div>Nenhum Ano Econtrado</div>
+              <>
+                <div>Nenhum Ano Econtrado</div>
+                <div onClick={previousStep}>{'<-'}voltar</div>
+              </>
             )}
           </div>
         </StyledComponents.Box>
@@ -53,30 +48,28 @@ const ListYears: React.FC<ListProps> = (): JSX.Element => {
           {calendar?.months?.length ? (
             <div>
               <Months
-                updateView={setDateView}
-                dateView={dateView}
-                months={calendar?.months}
                 previousStep={previousStep}
                 nextStep={nextStep}
                 loadingPage={loadingPage}
               />
             </div>
           ) : (
-            <div>Nenhum Mês Encontrado</div>
+            <>
+              <div>Nenhum Mês Encontrado</div>
+              <div onClick={previousStep}>{'<-'}voltar</div>
+            </>
           )}
         </div>
       )}
       {step === 2 && (
         <div>
           {calendar?.days?.length ? (
-            <Days
-              days={calendar?.days}
-              selectDate={dateView}
-              previousStep={previousStep}
-              loadingPage={loadingPage}
-            />
+            <Days previousStep={previousStep} loadingPage={loadingPage} />
           ) : (
-            <div>Nenhum Dia Encontrado</div>
+            <>
+              <div>Nenhum Dia Encontrado</div>
+              <div onClick={previousStep}>{'<-'}voltar</div>
+            </>
           )}
         </div>
       )}
