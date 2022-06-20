@@ -58,9 +58,8 @@ const DayModal: React.FC<DayProps> = ({
     setLoading(true);
     try {
       const daysr = await getUsersLogin(`month/${month?.id}/day`);
-      const days: Interface.Days[] = daysr?.data?.days?.filter(
-        (e: Interface.Days) => e.month_id === month?.id
-      );
+      const days: Interface.Days[] = daysr?.data?.days;
+
       setDayList(days);
     } catch (error) {}
     setLoading((state) => !state);

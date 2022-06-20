@@ -5,6 +5,7 @@ import Days from 'Components/Days';
 import Months from 'Components/Months';
 import Years from 'Components/Years';
 import { useAplicationData } from 'Provider/AplicationData';
+import { useNavigate } from 'react-router-dom';
 
 interface ListProps extends Interface.ReactChildren {}
 
@@ -12,6 +13,8 @@ const ListYears: React.FC<ListProps> = (): JSX.Element => {
   const [step, setStep] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const { calendar } = useAplicationData();
+
+  const redirect = useNavigate();
 
   const loadingPage = () => {
     setLoading((loading) => !loading);
@@ -25,6 +28,10 @@ const ListYears: React.FC<ListProps> = (): JSX.Element => {
     setStep((state) => state + 1);
   }
 
+  const RedirectUser = () => {
+    redirect(`/`);
+  };
+
   return loading ? (
     <div>Carregando ...</div>
   ) : (
@@ -37,7 +44,7 @@ const ListYears: React.FC<ListProps> = (): JSX.Element => {
             ) : (
               <>
                 <div>Nenhum Ano Econtrado</div>
-                <div onClick={previousStep}>{'<-'}voltar</div>
+                <div onClick={RedirectUser}>{'<-'}voltar</div>
               </>
             )}
           </div>
@@ -64,7 +71,7 @@ const ListYears: React.FC<ListProps> = (): JSX.Element => {
       {step === 2 && (
         <div>
           {calendar?.days?.length ? (
-            <Days previousStep={previousStep} loadingPage={loadingPage} />
+            <Days previousStep={previousStep} />
           ) : (
             <>
               <div>Nenhum Dia Encontrado</div>

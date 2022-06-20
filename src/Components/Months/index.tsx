@@ -24,7 +24,7 @@ const Months: React.FC<MonthsProps> = ({
   }>({});
   const { calendar, setCalendar } = useAplicationData();
   const { calendarView, setCalendarView } = useAplicationDataView();
-  const getCompleteddata = async (
+  const getMonthDay = async (
     id: string | undefined,
     month: string | undefined
   ) => {
@@ -32,9 +32,7 @@ const Months: React.FC<MonthsProps> = ({
     try {
       const responseDay = await getUsersLogin(`/month/${id}/day`);
 
-      const days: Interface.Days[] = responseDay?.data?.days?.filter(
-        (e: Interface.Days) => e.month_id === id
-      );
+      const days: Interface.Days[] = responseDay?.data?.days;
 
       setCalendarView({
         ...(calendarView as Interface.MonthYear),
@@ -66,7 +64,7 @@ const Months: React.FC<MonthsProps> = ({
         {calendar?.months?.map((month) => (
           <StyledComponents.Content key={month?.id}>
             {month?.name}
-            <button onClick={() => getCompleteddata(month?.id, month?.name)}>
+            <button onClick={() => getMonthDay(month?.id, month?.name)}>
               list day
             </button>
             <button onClick={() => setInformationModal(month?.id, month?.name)}>

@@ -9,13 +9,9 @@ import { useAplicationDataView } from 'Provider/AplicationDataView';
 
 interface DaysProps extends Interface.ReactChildren {
   previousStep: () => void;
-  loadingPage: () => void;
 }
 
-const Days: React.FC<DaysProps> = ({
-  previousStep,
-  loadingPage,
-}): JSX.Element => {
+const Days: React.FC<DaysProps> = ({ previousStep }): JSX.Element => {
   const [state, setState] = React.useState('');
   const [swith, setSwith] = React.useState(true);
   const { calendar, setCalendar } = useAplicationData();
@@ -26,18 +22,15 @@ const Days: React.FC<DaysProps> = ({
     month_id: string = '',
     task: string | null
   ) => {
-    loadingPage();
     try {
       await updateDayTask(`/month/${month_id}/day/${day_id}`, String(task));
       const responseDay = await getUsersLogin(`/month/${month_id}/day`);
 
-      const days: Interface.Days[] = responseDay?.data?.days?.filter(
-        (e: Interface.Days) => e.month_id === month_id
-      );
+      const days: Interface.Days[] = responseDay?.data?.days;
 
       setCalendar({ ...(calendar as Interface.ResponseAxiosUser), days });
     } catch (error) {}
-    loadingPage();
+
     setSwith((value) => !value);
   };
   function change(e: Type.InputOnChange) {

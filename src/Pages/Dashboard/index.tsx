@@ -19,7 +19,7 @@ const Home: React.FC = (): JSX.Element => {
       const user: ResponseAxiosUser = dataUser?.data?.user;
 
       const CompletedYears: Years[] = responseYear?.data?.years;
-      const years = CompletedYears.filter((e) => e?.user_id === params?.id);
+      const years = CompletedYears;
 
       setCalendar({ ...user, years });
       setMessage('Success');
