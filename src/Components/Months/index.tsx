@@ -3,27 +3,17 @@ import * as Interface from 'Common/Interfaces';
 import * as StyledComponents from './style';
 import { getUsersLogin } from 'Common/Http/Service/Login';
 import DayModal from 'Components/Modal/DayModal';
+import { useAplicationData } from 'Provider/AplicationData';
+import { useAplicationDataView } from 'Provider/AplicationDataView';
 
 interface MonthsProps extends Interface.ReactChildren {
-  months: Interface.Months[];
-  updateView: React.Dispatch<React.SetStateAction<Interface.MonthYear>>;
-  dateView: Interface.MonthYear;
   previousStep: () => void;
-  updateGeneralDate: React.Dispatch<
-    React.SetStateAction<Interface.ResponseAxiosUser | undefined>
-  >;
-  generalDate: Interface.ResponseAxiosUser;
   nextStep: () => void;
   loadingPage: () => void;
 }
 
 const Months: React.FC<MonthsProps> = ({
-  months,
-  updateView,
-  dateView,
   previousStep,
-  generalDate,
-  updateGeneralDate,
   loadingPage,
   nextStep,
 }) => {
@@ -32,6 +22,8 @@ const Months: React.FC<MonthsProps> = ({
     id?: string;
     name?: string;
   }>({});
+  const { calendar, setCalendar } = useAplicationData();
+  const { calendarView, setCalendarView } = useAplicationDataView();
   const getCompleteddata = async (
     id: string | undefined,
     month: string | undefined
@@ -43,8 +35,14 @@ const Months: React.FC<MonthsProps> = ({
       const days: Interface.Days[] = responseDay?.data?.days?.filter(
         (e: Interface.Days) => e.month_id === id
       );
-      updateView({ ...dateView, month: month, month_id: id });
-      updateGeneralDate({ ...generalDate, days });
+
+      setCalendarView({
+        ...(calendarView as Interface.MonthYear),
+        month: month,
+        month_id: id,
+      });
+
+      setCalendar({ ...(calendar as Interface.ResponseAxiosUser), days });
     } catch (error) {}
     loadingPage();
     nextStep();
@@ -63,9 +61,9 @@ const Months: React.FC<MonthsProps> = ({
   }
   return (
     <div>
-      <div onClick={previousStep}>{dateView?.year}</div>
+      <div onClick={previousStep}>{calendarView?.year}</div>
       <StyledComponents.Months>
-        {months.map((month) => (
+        {calendar?.months?.map((month) => (
           <StyledComponents.Content key={month?.id}>
             {month?.name}
             <button onClick={() => getCompleteddata(month?.id, month?.name)}>
@@ -80,7 +78,7 @@ const Months: React.FC<MonthsProps> = ({
           ismodal={isModal}
           showModal={showModal}
           month={monthModal}
-          year={dateView?.year}
+          year={calendarView?.year}
         />
       </StyledComponents.Months>
     </div>
