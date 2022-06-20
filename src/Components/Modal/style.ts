@@ -35,11 +35,11 @@ export const TitleClose = styled.button`
   background: red;
   cursor: pointer;
   border-radius: 30px;
-  height: 25px;
-  width: 25px;
+  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid blue;
 
   &:hover {
     opacity: 0.6;

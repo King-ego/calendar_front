@@ -1,3 +1,5 @@
+import { ChangeEvent } from 'react';
+
 export type NameMonth =
   | 'janeiro'
   | 'fevereiro'
@@ -11,3 +13,5 @@ export type NameMonth =
   | 'outubro'
   | 'novembro'
   | 'dezembro';
+
+export type InputOnChange = ChangeEvent<HTMLInputElement>;
