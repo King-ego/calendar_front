@@ -44,9 +44,8 @@ const MonthModal: React.FC<MonthModalProps> = ({
     setLoading(true);
     try {
       const monthsr = await getUsersLogin(`year/${yearId}/month`);
-      const months: Interface.Months[] = monthsr?.data?.months?.filter(
-        (e: Interface.Months) => e.year_id === yearId
-      );
+      const months: Interface.Months[] = monthsr?.data?.months;
+
       setMonthsList(months);
     } catch (error) {}
     setLoading((state) => !state);
