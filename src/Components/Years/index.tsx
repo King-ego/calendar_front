@@ -3,30 +3,23 @@ import * as Interface from 'Common/Interfaces';
 import * as StyledComponents from './style';
 import { getUsersLogin } from 'Common/Http/Service/Login';
 import MonthModal from 'Components/Modal/MonthModal';
+import { useAplicationData } from 'Provider/AplicationData';
+import { useAplicationDataView } from 'Provider/AplicationDataView';
 
 interface YearsProps extends Interface.ReactChildren {
-  years: Interface.Years[];
   nextStep: () => void;
   loadingPage: () => void;
-  updateView: React.Dispatch<React.SetStateAction<Interface.MonthYear>>;
-  dateView: Interface.MonthYear;
-  updateGeneralDate: React.Dispatch<
-    React.SetStateAction<Interface.ResponseAxiosUser | undefined>
-  >;
-  generalDate: Interface.ResponseAxiosUser;
 }
 
 const Years: React.FC<YearsProps> = ({
-  years,
   loadingPage,
   nextStep,
-  dateView,
-  generalDate,
-  updateGeneralDate,
-  updateView,
 }): JSX.Element => {
   const [isModal, setIsModal] = React.useState(false);
   const [yearModal, setYearModal] = React.useState('');
+  const { calendar, setCalendar } = useAplicationData();
+  const { calendarView, setCalendarView } = useAplicationDataView();
+
   const getCompleteddata = async (
     id: string | undefined,
     year: string | number | undefined
@@ -39,8 +32,12 @@ const Years: React.FC<YearsProps> = ({
         (e: Interface.Months) => e.year_id === id
       );
 
-      updateView({ ...dateView, year: `${year}` });
-      updateGeneralDate({ ...generalDate, months });
+      setCalendarView({
+        ...(calendarView as Interface.MonthYear),
+        year: `${year}`,
+      });
+
+      setCalendar({ ...(calendar as Interface.ResponseAxiosUser), months });
     } catch (error) {}
     nextStep();
     loadingPage();
@@ -56,7 +53,7 @@ const Years: React.FC<YearsProps> = ({
   };
   return (
     <div>
-      {years.map((year) => (
+      {calendar?.years.map((year) => (
         <StyledComponents.Flex key={year?.id}>
           {year?.name}
           <button onClick={() => getCompleteddata(year?.id, year?.name)}>

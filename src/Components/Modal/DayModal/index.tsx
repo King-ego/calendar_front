@@ -62,22 +62,19 @@ const DayModal: React.FC<DayProps> = ({
         (e: Interface.Days) => e.month_id === month?.id
       );
       setDayList(days);
-      console.log({ days });
     } catch (error) {}
     setLoading((state) => !state);
   };
 
   React.useEffect(() => {
-    console.log({ erd: month?.name });
     if (month?.id) {
       getDayUser();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [month?.id]);
   const createDay = async (name: string) => {
-    const create = await postDay(`month/${month?.id}/day`, name);
+    await postDay(`month/${month?.id}/day`, name);
     getDayUser();
-    console.log({ create });
   };
   return (
     <Modal open={ismodal} haeder={true} showModal={showModal}>
@@ -106,13 +103,10 @@ const DayModal: React.FC<DayProps> = ({
                 ? loading
                 : index < dayList?.length || index > dayList?.length
             }
-            // disabled={index >= monthsList?.length}
             onClick={() => createDay(value)}
-            // disabled={false}
             style={{ height: '19px', cursor: 'pointer' }}
           >
             <Icon width={15} height={15} name="increment" stroke="black" />
-            {/* cria mes */}
           </StyledComponents.ButtonIcrement>
         </StyledComponents.Div>
       ))}

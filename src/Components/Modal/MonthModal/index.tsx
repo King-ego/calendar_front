@@ -1,5 +1,4 @@
 import React from 'react';
-// import * as StyledComponents from '.'
 import * as Interface from 'Common/Interfaces';
 import * as StyledComponents from './style';
 import Modal from '..';
@@ -49,21 +48,16 @@ const MonthModal: React.FC<MonthModalProps> = ({
         (e: Interface.Months) => e.year_id === yearId
       );
       setMonthsList(months);
-      console.log({ months });
     } catch (error) {}
     setLoading((state) => !state);
   };
 
   const createMonth = async (name: string) => {
-    const create = await postMonth(`year/${yearId}/month`, name);
+    await postMonth(`year/${yearId}/month`, name);
     getMonthsUser();
-    console.log({ create });
   };
   return (
     <Modal open={ismodal} haeder={true} showModal={showModal}>
-      {/* <p onClick={showModal} style={{ color: 'white' }}>
-        {yearId}
-      </p> */}
       {months.map((value: string, index: number) => (
         <StyledComponents.Div
           disabled={index >= monthsList?.length}
@@ -79,12 +73,10 @@ const MonthModal: React.FC<MonthModalProps> = ({
                   ? loading
                   : index < monthsList?.length || index > monthsList?.length
               }
-              // disabled={index >= monthsList?.length}
               onClick={() => createMonth(value)}
               style={{ height: '19px', cursor: 'pointer' }}
             >
               <Icon width={15} height={15} name="increment" stroke="black" />
-              {/* cria mes */}
             </StyledComponents.ButtonIcrement>
           </div>
         </StyledComponents.Div>

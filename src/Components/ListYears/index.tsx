@@ -1,22 +1,17 @@
 import React from 'react';
-// import { getUsersLogin } from 'Common/Http/Service/Login';
 import * as Interface from 'Common/Interfaces';
 import * as StyledComponents from './style';
 import Days from 'Components/Days';
 import Months from 'Components/Months';
 import Years from 'Components/Years';
+import { useAplicationData } from 'Provider/AplicationData';
 
-interface ListProps extends Interface.ReactChildren {
-  data: Interface.ResponseAxiosUser;
-  setData: React.Dispatch<
-    React.SetStateAction<Interface.ResponseAxiosUser | undefined>
-  >;
-}
+interface ListProps extends Interface.ReactChildren {}
 
-const ListYears: React.FC<ListProps> = ({ data, setData }): JSX.Element => {
+const ListYears: React.FC<ListProps> = (): JSX.Element => {
   const [step, setStep] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
-  const [dateView, setDateView] = React.useState<Interface.MonthYear>({});
+  const { calendar } = useAplicationData();
 
   const loadingPage = () => {
     setLoading((loading) => !loading);
@@ -37,55 +32,44 @@ const ListYears: React.FC<ListProps> = ({ data, setData }): JSX.Element => {
       {step === 0 && (
         <StyledComponents.Box>
           <div>
-            {data?.years?.length ? (
-              <Years
-                years={data?.years}
-                loadingPage={loadingPage}
-                nextStep={nextStep}
-                updateGeneralDate={setData}
-                generalDate={data}
-                updateView={setDateView}
-                dateView={dateView}
-              />
+            {calendar?.years?.length ? (
+              <Years loadingPage={loadingPage} nextStep={nextStep} />
             ) : (
-              <div>Nenhum Ano Econtrado</div>
+              <>
+                <div>Nenhum Ano Econtrado</div>
+                <div onClick={previousStep}>{'<-'}voltar</div>
+              </>
             )}
           </div>
         </StyledComponents.Box>
       )}
       {step === 1 && (
         <div>
-          {data?.months?.length ? (
+          {calendar?.months?.length ? (
             <div>
               <Months
-                updateView={setDateView}
-                dateView={dateView}
-                months={data?.months}
                 previousStep={previousStep}
-                updateGeneralDate={setData}
-                generalDate={data}
                 nextStep={nextStep}
                 loadingPage={loadingPage}
               />
             </div>
           ) : (
-            <div>Nenhum Mês Encontrado</div>
+            <>
+              <div>Nenhum Mês Encontrado</div>
+              <div onClick={previousStep}>{'<-'}voltar</div>
+            </>
           )}
         </div>
       )}
       {step === 2 && (
         <div>
-          {data?.days?.length ? (
-            <Days
-              days={data?.days}
-              selectDate={dateView}
-              previousStep={previousStep}
-              updateGeneralDate={setData}
-              generalDate={data}
-              loadingPage={loadingPage}
-            />
+          {calendar?.days?.length ? (
+            <Days previousStep={previousStep} loadingPage={loadingPage} />
           ) : (
-            <div>Nenhum Dia Encontrado</div>
+            <>
+              <div>Nenhum Dia Encontrado</div>
+              <div onClick={previousStep}>{'<-'}voltar</div>
+            </>
           )}
         </div>
       )}
