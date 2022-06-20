@@ -1,6 +1,7 @@
 import React from 'react';
 import * as Interface from 'Common/Interfaces';
 import * as StyledComponets from './style';
+import Icon from 'Components/Icon';
 
 interface ModalProps extends Interface.ReactChildren {
   open: boolean;
@@ -17,8 +18,15 @@ const Modal: React.FC<ModalProps> = ({
     <StyledComponets.Container>
       <StyledComponets.Content>
         {haeder && (
-          <StyledComponets.Close style={{ color: 'black' }} onClick={showModal}>
-            <StyledComponets.TitleClose>X</StyledComponets.TitleClose>
+          <StyledComponets.Close onClick={showModal}>
+            <StyledComponets.TitleClose>
+              <Icon
+                width="15"
+                height="15"
+                name="close-modal"
+                stroke="#D9D9D9"
+              />
+            </StyledComponets.TitleClose>
           </StyledComponets.Close>
         )}
         {children}

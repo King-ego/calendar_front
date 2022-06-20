@@ -80,6 +80,9 @@ const ListYears: React.FC<ListProps> = ({ data, setData }): JSX.Element => {
               days={data?.days}
               selectDate={dateView}
               previousStep={previousStep}
+              updateGeneralDate={setData}
+              generalDate={data}
+              loadingPage={loadingPage}
             />
           ) : (
             <div>Nenhum Dia Encontrado</div>
