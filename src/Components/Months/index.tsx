@@ -3,16 +3,13 @@ import * as Interface from 'Common/Interfaces';
 import * as StyledComponents from './style';
 import { getUsersLogin } from 'Common/Http/Service/Login';
 import DayModal from 'Components/Modal/DayModal';
+import { useAplicationData } from 'Provider/AplicationData';
 
 interface MonthsProps extends Interface.ReactChildren {
   months: Interface.Months[];
   updateView: React.Dispatch<React.SetStateAction<Interface.MonthYear>>;
   dateView: Interface.MonthYear;
   previousStep: () => void;
-  updateGeneralDate: React.Dispatch<
-    React.SetStateAction<Interface.ResponseAxiosUser | undefined>
-  >;
-  generalDate: Interface.ResponseAxiosUser;
   nextStep: () => void;
   loadingPage: () => void;
 }
@@ -22,8 +19,6 @@ const Months: React.FC<MonthsProps> = ({
   updateView,
   dateView,
   previousStep,
-  generalDate,
-  updateGeneralDate,
   loadingPage,
   nextStep,
 }) => {
@@ -32,6 +27,7 @@ const Months: React.FC<MonthsProps> = ({
     id?: string;
     name?: string;
   }>({});
+  const { calendar, setCalendar } = useAplicationData();
   const getCompleteddata = async (
     id: string | undefined,
     month: string | undefined
@@ -44,7 +40,9 @@ const Months: React.FC<MonthsProps> = ({
         (e: Interface.Days) => e.month_id === id
       );
       updateView({ ...dateView, month: month, month_id: id });
-      updateGeneralDate({ ...generalDate, days });
+      if (calendar) {
+        setCalendar({ ...calendar, days });
+      }
     } catch (error) {}
     loadingPage();
     nextStep();

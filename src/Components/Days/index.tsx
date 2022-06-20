@@ -4,15 +4,12 @@ import type * as Type from 'Common/Types';
 import { daytwodigit, DayWeek } from 'Common/data_fns_functions';
 import * as StyledComponents from './style';
 import { getUsersLogin, updateDayTask } from 'Common/Http/Service/Login';
+import { useAplicationData } from 'Provider/AplicationData';
 
 interface DaysProps extends Interface.ReactChildren {
   days: Interface.Days[];
   previousStep: () => void;
   selectDate: Interface.MonthYear;
-  updateGeneralDate: React.Dispatch<
-    React.SetStateAction<Interface.ResponseAxiosUser | undefined>
-  >;
-  generalDate: Interface.ResponseAxiosUser;
   loadingPage: () => void;
 }
 
@@ -21,11 +18,11 @@ const Days: React.FC<DaysProps> = ({
   selectDate,
   previousStep,
   loadingPage,
-  updateGeneralDate,
-  generalDate,
 }): JSX.Element => {
   const [state, setState] = React.useState('');
   const [swith, setSwith] = React.useState(true);
+  const { calendar, setCalendar } = useAplicationData();
+
   const updateTask = async (
     day_id: string,
     month_id: string = '',
@@ -39,7 +36,9 @@ const Days: React.FC<DaysProps> = ({
       const days: Interface.Days[] = responseDay?.data?.days?.filter(
         (e: Interface.Days) => e.month_id === month_id
       );
-      updateGeneralDate({ ...generalDate, days });
+      if (calendar) {
+        setCalendar({ ...calendar, days });
+      }
     } catch (error) {}
     loadingPage();
     setSwith((value) => !value);

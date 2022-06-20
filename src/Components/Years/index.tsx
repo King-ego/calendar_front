@@ -3,6 +3,7 @@ import * as Interface from 'Common/Interfaces';
 import * as StyledComponents from './style';
 import { getUsersLogin } from 'Common/Http/Service/Login';
 import MonthModal from 'Components/Modal/MonthModal';
+import { useAplicationData } from 'Provider/AplicationData';
 
 interface YearsProps extends Interface.ReactChildren {
   years: Interface.Years[];
@@ -10,10 +11,6 @@ interface YearsProps extends Interface.ReactChildren {
   loadingPage: () => void;
   updateView: React.Dispatch<React.SetStateAction<Interface.MonthYear>>;
   dateView: Interface.MonthYear;
-  updateGeneralDate: React.Dispatch<
-    React.SetStateAction<Interface.ResponseAxiosUser | undefined>
-  >;
-  generalDate: Interface.ResponseAxiosUser;
 }
 
 const Years: React.FC<YearsProps> = ({
@@ -21,12 +18,12 @@ const Years: React.FC<YearsProps> = ({
   loadingPage,
   nextStep,
   dateView,
-  generalDate,
-  updateGeneralDate,
   updateView,
 }): JSX.Element => {
   const [isModal, setIsModal] = React.useState(false);
   const [yearModal, setYearModal] = React.useState('');
+  const { calendar, setCalendar } = useAplicationData();
+
   const getCompleteddata = async (
     id: string | undefined,
     year: string | number | undefined
@@ -40,7 +37,9 @@ const Years: React.FC<YearsProps> = ({
       );
 
       updateView({ ...dateView, year: `${year}` });
-      updateGeneralDate({ ...generalDate, months });
+      if (calendar) {
+        setCalendar({ ...calendar, months });
+      }
     } catch (error) {}
     nextStep();
     loadingPage();

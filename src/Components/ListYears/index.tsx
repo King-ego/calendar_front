@@ -5,18 +5,15 @@ import * as StyledComponents from './style';
 import Days from 'Components/Days';
 import Months from 'Components/Months';
 import Years from 'Components/Years';
+import { useAplicationData } from 'Provider/AplicationData';
 
-interface ListProps extends Interface.ReactChildren {
-  data: Interface.ResponseAxiosUser;
-  setData: React.Dispatch<
-    React.SetStateAction<Interface.ResponseAxiosUser | undefined>
-  >;
-}
+interface ListProps extends Interface.ReactChildren {}
 
-const ListYears: React.FC<ListProps> = ({ data, setData }): JSX.Element => {
+const ListYears: React.FC<ListProps> = (): JSX.Element => {
   const [step, setStep] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const [dateView, setDateView] = React.useState<Interface.MonthYear>({});
+  const { calendar } = useAplicationData();
 
   const loadingPage = () => {
     setLoading((loading) => !loading);
@@ -37,13 +34,11 @@ const ListYears: React.FC<ListProps> = ({ data, setData }): JSX.Element => {
       {step === 0 && (
         <StyledComponents.Box>
           <div>
-            {data?.years?.length ? (
+            {calendar?.years?.length ? (
               <Years
-                years={data?.years}
+                years={calendar?.years}
                 loadingPage={loadingPage}
                 nextStep={nextStep}
-                updateGeneralDate={setData}
-                generalDate={data}
                 updateView={setDateView}
                 dateView={dateView}
               />
@@ -55,15 +50,13 @@ const ListYears: React.FC<ListProps> = ({ data, setData }): JSX.Element => {
       )}
       {step === 1 && (
         <div>
-          {data?.months?.length ? (
+          {calendar?.months?.length ? (
             <div>
               <Months
                 updateView={setDateView}
                 dateView={dateView}
-                months={data?.months}
+                months={calendar?.months}
                 previousStep={previousStep}
-                updateGeneralDate={setData}
-                generalDate={data}
                 nextStep={nextStep}
                 loadingPage={loadingPage}
               />
@@ -75,13 +68,11 @@ const ListYears: React.FC<ListProps> = ({ data, setData }): JSX.Element => {
       )}
       {step === 2 && (
         <div>
-          {data?.days?.length ? (
+          {calendar?.days?.length ? (
             <Days
-              days={data?.days}
+              days={calendar?.days}
               selectDate={dateView}
               previousStep={previousStep}
-              updateGeneralDate={setData}
-              generalDate={data}
               loadingPage={loadingPage}
             />
           ) : (
