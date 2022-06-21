@@ -45,6 +45,7 @@ const Dashboard: React.FC = (): JSX.Element => {
           </StyledComponents.Flex>
         ))
       )}
+      <button>Adicionar Usuario</button>
     </StyledComponents.Box>
   );
 };

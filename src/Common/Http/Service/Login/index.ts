@@ -24,6 +24,15 @@ export const postDay = async (
   });
 };
 
+export const postYear = async (
+  patch: string,
+  name: number
+): Promise<AxiosResponse> => {
+  return await api.post(patch, {
+    name: name,
+  });
+};
+
 export const updateDayTask = async (
   patch: string,
   task: string

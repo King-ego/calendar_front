@@ -6,12 +6,14 @@ import Months from 'Components/Months';
 import Years from 'Components/Years';
 import { useAplicationData } from 'Provider/AplicationData';
 import { useNavigate } from 'react-router-dom';
+import YearModal from 'Components/Modal/YearModal';
 
 interface ListProps extends Interface.ReactChildren {}
 
 const ListYears: React.FC<ListProps> = (): JSX.Element => {
   const [step, setStep] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
+  const [modalYear, setIsModalYear] = React.useState(false);
   const { calendar } = useAplicationData();
 
   const redirect = useNavigate();
@@ -19,6 +21,10 @@ const ListYears: React.FC<ListProps> = (): JSX.Element => {
   const loadingPage = () => {
     setLoading((loading) => !loading);
   };
+
+  function showModalYear() {
+    setIsModalYear((show) => !show);
+  }
 
   function previousStep() {
     setStep((state) => state - 1);
@@ -47,6 +53,7 @@ const ListYears: React.FC<ListProps> = (): JSX.Element => {
                 <div onClick={RedirectUser}>{'<-'}voltar</div>
               </>
             )}
+            <button onClick={() => setIsModalYear(true)}>Adicionar Ano</button>
           </div>
         </StyledComponents.Box>
       )}
@@ -80,6 +87,7 @@ const ListYears: React.FC<ListProps> = (): JSX.Element => {
           )}
         </div>
       )}
+      <YearModal showModal={showModalYear} ismodal={modalYear} />
     </>
   );
 };
