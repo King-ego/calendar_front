@@ -18,8 +18,8 @@ const Modal: React.FC<ModalProps> = ({
     <StyledComponets.Container>
       <StyledComponets.Content>
         {haeder && (
-          <StyledComponets.Close onClick={showModal}>
-            <StyledComponets.TitleClose>
+          <StyledComponets.Close>
+            <StyledComponets.TitleClose onClick={showModal}>
               <Icon
                 width="15"
                 height="15"
