@@ -6,9 +6,7 @@ import { AplicationDataView } from './AplicationDataView';
 const Provider: React.FC<Interface.ReactChildren> = ({
   children,
 }): JSX.Element => {
-  const [calendar, setCalendar] = React.useState<
-    Interface.ResponseAxiosUser | undefined
-  >();
+  const [calendar, setCalendar] = React.useState<Interface.ResponseAxiosUser>();
   const [calendarView, setCalendarView] = React.useState<Interface.MonthYear>();
   return (
     <AplicationData.Provider value={{ calendar, setCalendar }}>
