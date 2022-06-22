@@ -20,8 +20,13 @@ const Days: React.FC<DaysProps> = ({ previousStep }): JSX.Element => {
   const updateTask = async (
     day_id: string,
     month_id: string = '',
-    task: string | null
+    task: string | null,
+    defaultTask: string | null
   ) => {
+    if (defaultTask === task) {
+      setSwith(undefined);
+      return;
+    }
     try {
       await updateDayTask(`/month/${month_id}/day/${day_id}`, String(task));
       const responseDay = await getUsersLogin(`/month/${month_id}/day`);
@@ -65,11 +70,20 @@ const Days: React.FC<DaysProps> = ({ previousStep }): JSX.Element => {
                     id={day?.id}
                     type="text"
                     onChange={change}
-                    onBlur={() =>
-                      updateTask(day?.id, calendarView?.month_id, state)
-                    }
                     defaultValue={day?.task ? day.task : ''}
                   />
+                  <button
+                    onClick={() =>
+                      updateTask(
+                        day?.id,
+                        calendarView?.month_id,
+                        state,
+                        day?.task
+                      )
+                    }
+                  >
+                    {state === day?.task ? 'Voltar' : 'Salvar'}
+                  </button>
                 </>
               ) : (
                 <p
