@@ -12,7 +12,7 @@ interface DaysProps extends Interface.ReactChildren {
 }
 
 const Days: React.FC<DaysProps> = ({ previousStep }): JSX.Element => {
-  const [state, setState] = React.useState('');
+  const [state, setState] = React.useState<string | null>(null);
   const [swith, setSwith] = React.useState<string | undefined>(undefined);
   const { calendar, setCalendar } = useAplicationData();
   const { calendarView } = useAplicationDataView();
@@ -90,7 +90,7 @@ const Days: React.FC<DaysProps> = ({ previousStep }): JSX.Element => {
                   style={{ textTransform: 'capitalize' }}
                   onClick={() => {
                     getId(day.id);
-                    setState(day?.task ? day.task : '');
+                    setState(day?.task);
                   }}
                 >
                   {day?.task ? day.task : 'Empty'}

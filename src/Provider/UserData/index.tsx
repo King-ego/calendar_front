@@ -6,7 +6,7 @@ interface UserDataContent {
   setUser: (c: Interface.ResponseAxiosUser[]) => void;
 }
 
-export const UserData = React.createContext<UserDataContent>({
+const UserData = React.createContext<UserDataContent>({
   user: undefined, // set a default value
   setUser: () => {},
 });
