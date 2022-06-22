@@ -13,7 +13,7 @@ interface DaysProps extends Interface.ReactChildren {
 
 const Days: React.FC<DaysProps> = ({ previousStep }): JSX.Element => {
   const [state, setState] = React.useState('');
-  const [swith, setSwith] = React.useState(true);
+  const [swith, setSwith] = React.useState<string | undefined>(undefined);
   const { calendar, setCalendar } = useAplicationData();
   const { calendarView } = useAplicationDataView();
 
@@ -31,10 +31,13 @@ const Days: React.FC<DaysProps> = ({ previousStep }): JSX.Element => {
       setCalendar({ ...(calendar as Interface.ResponseAxiosUser), days });
     } catch (error) {}
 
-    setSwith((value) => !value);
+    setSwith(undefined);
   };
   function change(e: Type.InputOnChange) {
     setState(e.target.value);
+  }
+  function getId(id: string) {
+    setSwith(id);
   }
   return (
     <div>
@@ -56,23 +59,28 @@ const Days: React.FC<DaysProps> = ({ previousStep }): JSX.Element => {
               </p>
             </StyledComponents.Date>
             <StyledComponents.Task>
-              {swith ? (
+              {swith && swith === day.id ? (
+                <>
+                  <input
+                    id={day?.id}
+                    type="text"
+                    onChange={change}
+                    onBlur={() =>
+                      updateTask(day?.id, calendarView?.month_id, state)
+                    }
+                    defaultValue={day?.task ? day.task : ''}
+                  />
+                </>
+              ) : (
                 <p
                   style={{ textTransform: 'capitalize' }}
-                  onClick={() => setSwith((value) => !value)}
+                  onClick={() => {
+                    getId(day.id);
+                    setState(day?.task ? day.task : '');
+                  }}
                 >
                   {day?.task ? day.task : 'Empty'}
                 </p>
-              ) : (
-                <input
-                  id={day?.id}
-                  type="text"
-                  onChange={change}
-                  onBlur={() =>
-                    updateTask(day?.id, calendarView?.month_id, state)
-                  }
-                  defaultValue={day?.task ? day.task : ''}
-                />
               )}
             </StyledComponents.Task>
           </StyledComponents.Flex>
