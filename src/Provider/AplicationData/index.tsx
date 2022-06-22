@@ -6,7 +6,7 @@ interface AplicationDataContent {
   setCalendar: (c: Interface.ResponseAxiosUser) => void;
 }
 
-export const AplicationData = React.createContext<AplicationDataContent>({
+const AplicationData = React.createContext<AplicationDataContent>({
   calendar: undefined, // set a default value
   setCalendar: () => {},
 });

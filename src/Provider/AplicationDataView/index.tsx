@@ -6,11 +6,10 @@ interface AplicationDataViewContent {
   setCalendarView: (c: Interface.MonthYear) => void;
 }
 
-export const AplicationDataView =
-  React.createContext<AplicationDataViewContent>({
-    calendarView: undefined, // set a default value
-    setCalendarView: () => {},
-  });
+const AplicationDataView = React.createContext<AplicationDataViewContent>({
+  calendarView: undefined, // set a default value
+  setCalendarView: () => {},
+});
 
 export const useAplicationDataView = () => React.useContext(AplicationDataView);
 
