@@ -33,6 +33,21 @@ export const postYear = async (
   });
 };
 
+export const postUser = async (
+  patch: string,
+  email: string,
+  name: string,
+  password: string,
+  type: string
+): Promise<AxiosResponse> => {
+  return await api.post(patch, {
+    name,
+    email,
+    password,
+    type,
+  });
+};
+
 export const updateDayTask = async (
   patch: string,
   task: string

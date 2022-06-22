@@ -3,10 +3,14 @@ import { getUsersLogin } from 'Common/Http/Service/Login';
 import * as StyledComponents from './style';
 import { useNavigate } from 'react-router';
 import { ResponseAxiosUser } from 'Common/Interfaces';
+import UserModal from 'Components/Modal/UserModal';
+import { useUserData } from 'Provider/UserData';
 
 const Dashboard: React.FC = (): JSX.Element => {
-  const [users, setUsers] = React.useState<ResponseAxiosUser[]>([]);
+  // const [users, setUsers] = React.useState<ResponseAxiosUser[]>([]);
   const [loading, setLoading] = React.useState(false);
+  const [isModal, setIsModal] = React.useState(false);
+  const { user, setUser } = useUserData();
 
   const redirect = useNavigate();
   const getUsers = async () => {
@@ -16,7 +20,7 @@ const Dashboard: React.FC = (): JSX.Element => {
 
       const data: ResponseAxiosUser[] = response?.data?.users;
 
-      setUsers(data);
+      setUser(data);
     } catch (error) {}
     setLoading(false);
   };
@@ -25,15 +29,20 @@ const Dashboard: React.FC = (): JSX.Element => {
     redirect(`user/${id}`);
   };
 
+  const showModal = () => {
+    setIsModal((state) => !state);
+  };
+
   React.useEffect(() => {
     getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <StyledComponents.Box>
       {loading ? (
         <div>carregando...</div>
       ) : (
-        users.map((user) => (
+        user?.map((user) => (
           <StyledComponents.Flex
             onClick={() => RedirectUser(user.id)}
             key={user.id}
@@ -45,7 +54,8 @@ const Dashboard: React.FC = (): JSX.Element => {
           </StyledComponents.Flex>
         ))
       )}
-      <button>Adicionar Usuario</button>
+      <button onClick={showModal}>Adicionar Usuario</button>
+      <UserModal showModal={showModal} ismodal={isModal} />
     </StyledComponents.Box>
   );
 };
