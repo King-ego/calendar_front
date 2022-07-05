@@ -1,5 +1,6 @@
 import React from 'react';
 import * as Interface from 'Common/Interfaces';
+import type * as Types from 'Common/Types';
 import * as StyledComponents from './style';
 import { getUsersLogin } from 'Common/Http/Service/Login';
 import DayModal from 'Components/Modal/DayModal';
@@ -57,16 +58,25 @@ const Months: React.FC<MonthsProps> = ({
   function showModal() {
     setIsModal((show) => !show);
   }
+
+  const redirectForDays = (
+    e: Types.EventClick,
+    id: string = '',
+    year: string = ''
+  ) => {
+    if (e.target === e.currentTarget) getMonthDay(id, year);
+  };
+
   return (
     <div>
       <div onClick={previousStep}>{calendarView?.year}</div>
       <StyledComponents.Months>
         {calendar?.months?.map((month) => (
-          <StyledComponents.Content key={month?.id}>
+          <StyledComponents.Content
+            onClick={(e) => redirectForDays(e, month?.id, month?.name)}
+            key={month?.id}
+          >
             {month?.name}
-            <button onClick={() => getMonthDay(month?.id, month?.name)}>
-              list day
-            </button>
             <button onClick={() => setInformationModal(month?.id, month?.name)}>
               open modal
             </button>

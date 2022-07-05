@@ -33,7 +33,7 @@ export interface ResponseAxiosUser {
   name?: string;
   email?: string;
   password?: string;
-  years: Years[];
-  months: Months[];
-  days: Days[];
+  years?: Years[];
+  months?: Months[];
+  days?: Days[];
 }

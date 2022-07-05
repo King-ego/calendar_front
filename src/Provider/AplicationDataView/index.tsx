@@ -16,7 +16,9 @@ export const useAplicationDataView = () => React.useContext(AplicationDataView);
 export const ProviderAplicationDataView: React.FC<Interface.ReactChildren> = ({
   children,
 }) => {
-  const [calendarView, setCalendarView] = React.useState<Interface.MonthYear>();
+  const [calendarView, setCalendarView] = React.useState<Interface.MonthYear>(
+    {}
+  );
   return (
     <AplicationDataView.Provider value={{ calendarView, setCalendarView }}>
       {children}
