@@ -1,6 +1,7 @@
 import React from 'react';
 import * as Interface from 'Common/Interfaces';
 import * as StyledComponents from './style';
+import type * as Types from 'Common/Types';
 import { getUsersLogin } from 'Common/Http/Service/Login';
 import MonthModal from 'Components/Modal/MonthModal';
 import { useAplicationData } from 'Provider/AplicationData';
@@ -49,15 +50,29 @@ const Years: React.FC<YearsProps> = ({
     setYearModal(id);
     showModal();
   };
+
+  const redirectForMonths = (
+    e: Types.EventClick,
+    id: string = '',
+    year: number = 0
+  ) => {
+    if (e.target === e.currentTarget) getYearMonth(id, year);
+  };
+
   return (
     <div>
-      {calendar?.years.map((year) => (
-        <StyledComponents.Flex key={year?.id}>
+      {calendar?.years?.map((year) => (
+        <StyledComponents.Flex
+          onClick={(e) => redirectForMonths(e, year?.id, year?.name)}
+          key={year?.id}
+        >
           {year?.name}
-          <button onClick={() => getYearMonth(year?.id, year?.name)}>
-            {'>'}
+          <button
+            style={{ cursor: 'pointer' }}
+            onClick={() => setInformationModal(year?.id)}
+          >
+            +
           </button>
-          <button onClick={() => setInformationModal(year?.id)}>+</button>
         </StyledComponents.Flex>
       ))}
 

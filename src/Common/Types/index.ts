@@ -13,3 +13,5 @@ export type NameMonth =
   | 'dezembro';
 
 export type InputOnChange = React.ChangeEvent<HTMLInputElement>;
+
+export type EventClick = React.MouseEvent<HTMLDivElement, MouseEvent>;

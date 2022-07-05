@@ -16,7 +16,9 @@ export const useAplicationData = () => React.useContext(AplicationData);
 export const ProviderAplicationData: React.FC<Interface.ReactChildren> = ({
   children,
 }) => {
-  const [calendar, setCalendar] = React.useState<Interface.ResponseAxiosUser>();
+  const [calendar, setCalendar] = React.useState<Interface.ResponseAxiosUser>(
+    {}
+  );
   return (
     <AplicationData.Provider value={{ calendar, setCalendar }}>
       {children}

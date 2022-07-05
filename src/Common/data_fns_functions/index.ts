@@ -7,7 +7,7 @@ export const daytwodigit = (digit: number): string => {
 
 export const DayWeek = (
   year: string = '2022',
-  month: string = '01',
+  month: string = 'janeiro',
   day: number = 1
 ): string => {
   const dayweek = getDay(
@@ -52,7 +52,7 @@ export const validatedDay = (
   month: string = '01',
   day: string
 ): boolean => {
-  const validated = parseISO(
+  const validated: Date = parseISO(
     `${year}-${getDateMonth(month as Types.NameMonth)}-${day}`
   );
 
