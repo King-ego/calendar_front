@@ -31,7 +31,6 @@ const UserModal: React.FC<UserModalProps> = ({
   };
 
   const onSubmit = async ({ email, name, password, type }: MyFormValues) => {
-
     await postUser('calendarUser', email, name, password, type);
 
     const response = await getUsersLogin('/calendarUser');
@@ -42,7 +41,12 @@ const UserModal: React.FC<UserModalProps> = ({
     showModal();
   };
   return (
-    <Modal haeder={true} showModal={showModal} open={ismodal}>
+    <Modal
+      isCloseModal={true}
+      haeder={true}
+      showModal={showModal}
+      open={ismodal}
+    >
       <Submit.Formik initialValues={initialValues} onSubmit={onSubmit}>
         <Submit.Form>
           <div>
