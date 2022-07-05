@@ -76,7 +76,12 @@ const DayModal: React.FC<DayProps> = ({
     getDayUser();
   };
   return (
-    <Modal open={ismodal} haeder={true} showModal={showModal}>
+    <Modal
+      isCloseModal={true}
+      open={ismodal}
+      haeder={true}
+      showModal={showModal}
+    >
       {day.map((value, index) => (
         <StyledComponents.Div
           key={value}

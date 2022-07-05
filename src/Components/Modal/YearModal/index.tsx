@@ -42,7 +42,12 @@ const YearModal: React.FC<YearModalProps> = ({
   };
   const initialValues: MyFormValues = { year: '' };
   return (
-    <Modal haeder={true} open={ismodal} showModal={showModal}>
+    <Modal
+      isCloseModal={true}
+      haeder={true}
+      open={ismodal}
+      showModal={showModal}
+    >
       <Submit.Formik
         onSubmit={(values) => onSubmit(values)}
         initialValues={initialValues}

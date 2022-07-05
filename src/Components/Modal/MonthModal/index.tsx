@@ -56,7 +56,12 @@ const MonthModal: React.FC<MonthModalProps> = ({
     getMonthsUser();
   };
   return (
-    <Modal open={ismodal} haeder={true} showModal={showModal}>
+    <Modal
+      isCloseModal={true}
+      open={ismodal}
+      haeder={true}
+      showModal={showModal}
+    >
       {months.map((value: string, index: number) => (
         <StyledComponents.Div
           disabled={index >= monthsList?.length}

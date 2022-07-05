@@ -7,15 +7,21 @@ interface ModalProps extends Interface.ReactChildren {
   open: boolean;
   showModal?: () => void;
   haeder?: boolean;
+  isCloseModal: boolean;
 }
 const Modal: React.FC<ModalProps> = ({
   children,
   open,
   haeder,
   showModal,
+  isCloseModal,
 }): JSX.Element => {
+  const closeModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.target !== e.currentTarget) return;
+    if (showModal && isCloseModal) showModal();
+  };
   return open ? (
-    <StyledComponets.Container>
+    <StyledComponets.Container id="modal-close" onClick={closeModal}>
       <StyledComponets.Content>
         {haeder && (
           <StyledComponets.Close>
