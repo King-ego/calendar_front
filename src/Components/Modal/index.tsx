@@ -1,5 +1,6 @@
 import React from 'react';
 import * as Interface from 'Common/Interfaces';
+import type * as Types from 'Common/Types';
 import * as StyledComponets from './style';
 import Icon from 'Components/Icon';
 
@@ -16,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({
   showModal,
   isCloseModal,
 }): JSX.Element => {
-  const closeModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const closeModal = (e: Types.EventClick) => {
     if (e.target !== e.currentTarget) return;
     if (showModal && isCloseModal) showModal();
   };

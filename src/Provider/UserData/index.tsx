@@ -16,7 +16,7 @@ export const useUserData = () => React.useContext(UserData);
 export const ProviderUserData: React.FC<Interface.ReactChildren> = ({
   children,
 }) => {
-  const [user, setUser] = React.useState<Interface.ResponseAxiosUser[]>();
+  const [user, setUser] = React.useState<Interface.ResponseAxiosUser[]>([]);
   return (
     <UserData.Provider value={{ user, setUser }}>{children}</UserData.Provider>
   );
