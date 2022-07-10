@@ -37,7 +37,14 @@ const Days: React.FC<DaysProps> = ({ previousStep }): JSX.Element => {
     } catch (error) {}
 
     setSwith(undefined);
+    getId('');
   };
+  function activeSelect(e: Type.EventClick, id: string, task: string | null) {
+    if (e.target === e.currentTarget) {
+      getId(id);
+      setState(task);
+    }
+  }
   function change(e: Type.InputOnChange) {
     setState(e.target.value);
   }
@@ -63,7 +70,11 @@ const Days: React.FC<DaysProps> = ({ previousStep }): JSX.Element => {
                 {daytwodigit(day?.name)} de {calendarView?.month?.slice(0, 3)}
               </p>
             </StyledComponents.Date>
-            <StyledComponents.Task>
+            <StyledComponents.Task
+              onClick={(e) => {
+                activeSelect(e, day.id, day.task);
+              }}
+            >
               {swith && swith === day.id ? (
                 <>
                   <input
@@ -87,11 +98,8 @@ const Days: React.FC<DaysProps> = ({ previousStep }): JSX.Element => {
                 </>
               ) : (
                 <p
+                  onClick={(e) => activeSelect(e, day.id, day.task)}
                   style={{ textTransform: 'capitalize' }}
-                  onClick={() => {
-                    getId(day.id);
-                    setState(day?.task);
-                  }}
                 >
                   {day?.task ? day.task : 'Empty'}
                 </p>
