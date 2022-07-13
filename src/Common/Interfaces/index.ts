@@ -37,3 +37,9 @@ export interface ResponseAxiosUser {
   months?: Months[];
   days?: Days[];
 }
+
+export interface ProtectedRouteProps {
+  Component: JSX.Element;
+  isAuthenticated: boolean;
+  isAuthenticatedPatch: string;
+}
